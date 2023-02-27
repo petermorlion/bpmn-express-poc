@@ -28,9 +28,6 @@ let services = {
     isFalse: (val) => {
         const result = val === false;
         return result;
-    },
-    isBelow: (input, test) => {
-        return input < test;
     }
 };
 
