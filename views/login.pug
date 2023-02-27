@@ -1,0 +1,31 @@
+html
+  head
+    title= "Login"
+  body
+    h1= "Login"
+    p Credentials are hard-coded, use "user" as username and "pwd" as password.
+    form(
+      method='POST'
+    )
+      div
+        label(
+          for='username'
+        ) Username
+        input(
+          type='text'
+          name='username'
+          id='username'
+        )
+      div
+        label(
+          for='password'
+        ) Password
+        input(
+          type='password'
+          name='password'
+          id='password'
+        )
+      button(
+        type='submit'
+        value='Submit'
+      ) Submit

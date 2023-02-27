@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="testProcess" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <process id="theProcess1" isExecutable="true">
+    <startEvent id="theStart" />
+    <userTask id="loginPage" />
+    <exclusiveGateway id="checkLogin" />
+    <serviceTask id="logger1" implementation="${environment.services.logger}" />
+    <serviceTask id="invalidLogin" implementation="${environment.services.invalidLogin}" />
+    <serviceTask id="validLogin" implementation="${environment.services.validLogin}" />
+    <serviceTask id="logger2" implementation="${environment.services.logger}" />
+
+    <sequenceFlow id="flow1" sourceRef="theStart" targetRef="logger1" />
+    <sequenceFlow id="flow2" sourceRef="logger1" targetRef="loginPage" />
+    <sequenceFlow id="flow3" sourceRef="loginPage" targetRef="logger2" />
+    <sequenceFlow id="flow4" sourceRef="logger2" targetRef="checkLogin" />
+    <sequenceFlow id="flow5b" sourceRef="checkLogin" targetRef="validLogin">
+        <conditionExpression xsi:type="tFormalExpression">\${environment.services.isTrue(environment.output.loginPage.isValidLogin)}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5a" sourceRef="checkLogin" targetRef="invalidLogin">
+        <conditionExpression xsi:type="tFormalExpression">\${environment.services.isFalse(environment.output.loginPage.isValidLogin)}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="validLogin" targetRef="end1" />
+    <sequenceFlow id="flow7" sourceRef="invalidLogin" targetRef="end2" />
+
+    <endEvent id="end1" />
+    <endEvent id="end2" />
+  </process>
+</definitions>
